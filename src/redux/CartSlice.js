@@ -8,35 +8,64 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      /*console.log(state.cartList);
-      const cartExist = state.cartList.find((cart) => {
-        cart.id === action.payload.id;
-      });*/
+      const itemExist = state.cartList.find((c) => c.id === action.payload.id);
 
-      const item = state.cartList.find((c) => c.id === action.payload.id);
-
-      if (item) {
-        item.quantity += action.payload.quantity;
+      if (itemExist) {
+        let tempQty = itemExist.quantity + 1;
+        /*itemExist.total = itemExist.quantity * itemExist.productPrice;*/
+        state.cartList = state.cartList.map((item) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                quantity: tempQty,
+                total: item.productPrice * tempQty,
+              }
+            : item
+        );
       } else {
         state.cartList.push(action.payload);
       }
-
-      /*if (cartExist) {
-        cartExist.quantity += action.payload.quantity;
-      } else {
-        state.cartList.push(action.payload);
-      }*/
+    },
+    removeFromCart: (state, { payload }) => {
+      state.cartList = state.cartList.filter((item) => item.id !== payload.id);
+    },
+    removeCart: (state) => {
+      state.cartList = [];
     },
     increaseQuantity: (state, { payload }) => {
-      const item = state.cartList.find((c) => c.id === payload.id);
-      if (item) {
-        state.cartList = { ...item, quantity: payload.quantity++ };
-      }
+      state.cartList = state.cartList.map((item) =>
+        item.id === payload.id
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+              total: item.productPrice * (item.quantity + 1),
+            }
+          : item
+      );
+    },
+    decreaseQuantity: (state, action) => {
+      state.cartList = state.cartList.map((item) =>
+        item.id === action.payload.id
+          ? item.quantity > 1
+            ? {
+                ...item,
+                quantity: item.quantity - 1,
+                total: item.productPrice * (item.quantity - 1),
+              }
+            : { ...item, quantity: 1, total: item.productPrice }
+          : { ...item, quantity: 1, total: item.productPrice }
+      );
     },
   },
 });
 
-export const { addToCart, increaseQuantity } = cartSlice.actions;
+export const {
+  addToCart,
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart,
+  removeCart,
+} = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;
 
 export default cartSlice;

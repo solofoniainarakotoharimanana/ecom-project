@@ -27,7 +27,8 @@ const ProductItem = ({ product }) => {
         {product.name}
       </h1>
       <img
-        className="object-cover lg:w-96"
+        onClick={showOrCloseModal}
+        className="object-cover lg:w-96 hover:cursor-pointer"
         src={product.thumbnailImage}
         alt={product.name}
       />
@@ -102,6 +103,8 @@ const ProductItem = ({ product }) => {
               productPrice: product.basePrice,
               productCategory: product.productCategory,
               productColor: product.colorOptions[0],
+              stock: product.stock,
+              total: 1 * product.basePrice,
               quantity: 1,
             })
           }
@@ -118,8 +121,8 @@ const ProductItem = ({ product }) => {
         createPortal(
           <ModalProductDetail
             product={product}
+            toggleModal={toggleModal}
             showOrCloseModal={showOrCloseModal}
-            addToCartList={addToCartList}
           />,
           document.body
         )}

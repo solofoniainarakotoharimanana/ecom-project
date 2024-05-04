@@ -2,6 +2,7 @@ import { IoMenu } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const cartList = useSelector((state) => state.CARTS.cartList);
@@ -35,18 +36,21 @@ const Navbar = () => {
         </div>
         {/* Primary Navigation */}
         <div className="hidden md:flex md:flex-row flex-col items-center justify-start md:space-x-1 navigation-menu pb-3 md:pb-0 navigation-menu">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="py-2 px-3 block hover:text-slate-300 transition hover:duration-150 hover:ease-in-out"
           >
             Home
-          </a>
+          </Link>
           <a href="#" className="py-2 px-3 block hover:text-slate-300">
             Order
           </a>
           {/*  Dropdown Menu */}
 
-          <a href="#" className="relative py-2 px-3 block hover:text-slate-300">
+          <Link
+            to="/cart"
+            className="relative py-2 px-3 block hover:text-slate-300"
+          >
             <FaShoppingCart className="text-xl" />
             {cartDatas.length > 0 && (
               <span
@@ -57,7 +61,7 @@ const Navbar = () => {
                 {cartDatas.length > 9 ? "9+" : cartDatas.length}
               </span>
             )}
-          </a>
+          </Link>
           <div>
             <button
               className="bg-transparent hover:bg-green-900

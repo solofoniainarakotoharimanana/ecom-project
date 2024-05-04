@@ -4,18 +4,20 @@
 import React, { useEffect, useState } from "react";
 import Rating from "../../services/Rating";
 import { FaShoppingCart } from "react-icons/fa";
-import { increaseQuantity } from "../../redux/CartSlice";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { addToCart } from "../../redux/CartSlice";
 
-const ModalProductDetail = ({ product, showOrCloseModal, addToCartList }) => {
+const ModalProductDetail = ({ product, showOrCloseModal, toggleModal }) => {
   const [qty, setQty] = useState(1);
-  const [total, setTotal] = useState(product.basePrice);
+  const [total, setTotal] = useState(0);
   const [errorQty, setErrorQty] = useState("");
-  useEffect(() => {
-    setTotal(qty * product.basePrice);
-  }, [qty]);
+  const [color, setColor] = useState("");
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const increaseQuantity = () => {
     if (qty < product.stock) {
       setQty(qty + 1);
@@ -28,6 +30,16 @@ const ModalProductDetail = ({ product, showOrCloseModal, addToCartList }) => {
     setErrorQty("");
     setQty(qty > 1 ? qty - 1 : 1);
   };
+
+  const addToCartList = (payload) => {
+    dispatch(addToCart(payload));
+    showOrCloseModal();
+    navigate("/cart");
+  };
+
+  useEffect(() => {
+    setTotal(product.basePrice * qty);
+  }, [qty]);
   return (
     <div
       onClick={showOrCloseModal}
@@ -154,10 +166,17 @@ const ModalProductDetail = ({ product, showOrCloseModal, addToCartList }) => {
                 <span className="text-sm text-slate-800 font-semibold">
                   Colors:{" "}
                 </span>
-                <select className="text-sm py-1 px-2 rounded border-2 text-end border-zinc-400">
+                <select
+                  onChange={(e) => setColor(e.target.value)}
+                  className="text-sm py-1 px-2 rounded border-2 text-end border-zinc-400"
+                >
                   {product.colorOptions.length > 0 &&
                     product.colorOptions.map((color) => {
-                      return <option value={color}>{color}</option>;
+                      return (
+                        <option key={color} value={color}>
+                          {color}
+                        </option>
+                      );
                     })}
                 </select>
               </div>
@@ -167,10 +186,10 @@ const ModalProductDetail = ({ product, showOrCloseModal, addToCartList }) => {
                 <h5 className="text-sm uppercase ml-3 font-bold text-indigo-600">
                   camera
                 </h5>
-                <div className="flex flex-col m-1">
+                <div className="flex flex-col m-1 ml-3">
                   {Object.entries(product.camera).map((cam) => {
                     return (
-                      <div>
+                      <div key={cam[0]}>
                         <span className="text-sm text-slate-800 font-semibold uppercase">
                           {cam[0]}:{" "}
                         </span>
@@ -195,6 +214,9 @@ const ModalProductDetail = ({ product, showOrCloseModal, addToCartList }) => {
                 productBrand: product.brand,
                 productPrice: product.basePrice,
                 productCategory: product.productCategory,
+                productColor: color,
+                stock: product.stock,
+                total: qty * product.basePrice,
                 quantity: qty,
               })
             }

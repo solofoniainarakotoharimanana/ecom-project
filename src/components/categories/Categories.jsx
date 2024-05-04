@@ -3,12 +3,18 @@
 import React from "react";
 import CategoryItem from "./CategoryItem";
 
-const Categories = ({ categories }) => {
+const Categories = ({ categories, setSearchCategory }) => {
   return (
     <div className="flex justify-center flex-wrap mx-5 my-3 p-3 gap-3">
       {categories &&
         categories.map((category) => {
-          return <CategoryItem key={category} category={category} />;
+          return (
+            <CategoryItem
+              key={category}
+              category={category}
+              setSearchCategory={setSearchCategory}
+            />
+          );
         })}
     </div>
   );
