@@ -36,8 +36,38 @@ const Home = () => {
     setCategories(getCategories());
   }, [products]);
 
-  const filteredProductsByName = products.filter((p) => {
-    const containsProducts = p.name
+  const filteredProducts = products.filter((p) => {
+    let containsProducts = [];
+
+    if (searchText && searchCategory == "") {
+      const containsProductsByName = p.name
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
+
+      containsProducts = containsProductsByName;
+    } else if (searchText == "" && searchCategory) {
+      const containsProductsByCategory = p.productCategory
+        .toLowerCase()
+        .includes(searchCategory.toLowerCase());
+
+      containsProducts = containsProductsByCategory;
+    } else if (searchText && searchCategory) {
+      const containsProductsByName = p.name
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
+
+      const containsProductsByCategory = p.productCategory
+        .toLowerCase()
+        .includes(searchCategory.toLowerCase());
+
+      containsProducts = containsProductsByName && containsProductsByCategory;
+    } else {
+      containsProducts = products;
+    }
+    return containsProducts;
+  });
+
+  /*const containsProductsByName = p.name
       .toLowerCase()
       .includes(searchText.toLowerCase());
 
@@ -49,8 +79,10 @@ const Home = () => {
       .toLowerCase()
       .includes(searchCategory.toLowerCase());
 
-    return containsProducts;
-  });
+    return containsProducts.name
+      .toLocaleLowerCase()
+      .includes(searchText.toLocaleLowerCase());
+  });*/
 
   return (
     <div className="bg-slate-300 h-full">
@@ -61,7 +93,7 @@ const Home = () => {
           setSearchCategory={setSearchCategory}
         />
       </div>
-      <ProductList products={filteredProductsByName} />
+      <ProductList products={filteredProducts} />
     </div>
   );
 };
