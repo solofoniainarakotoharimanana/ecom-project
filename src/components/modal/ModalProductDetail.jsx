@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Rating from "../../services/Rating";
 import { FaShoppingCart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -14,6 +14,7 @@ const ModalProductDetail = ({ product, showOrCloseModal, toggleModal }) => {
   const [total, setTotal] = useState(0);
   const [errorQty, setErrorQty] = useState("");
   const [color, setColor] = useState("");
+  const refQty = useRef(qty);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +41,9 @@ const ModalProductDetail = ({ product, showOrCloseModal, toggleModal }) => {
   useEffect(() => {
     setTotal(product.basePrice * qty);
   }, [qty]);
+
+  console.log(qty);
+
   return (
     <div
       onClick={showOrCloseModal}
@@ -216,7 +220,7 @@ const ModalProductDetail = ({ product, showOrCloseModal, toggleModal }) => {
                 productCategory: product.productCategory,
                 productColor: color,
                 stock: product.stock,
-                total: qty * product.basePrice,
+                total: product.basePrice * qty,
                 quantity: qty,
               })
             }

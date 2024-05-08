@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-const-assign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
@@ -14,20 +16,18 @@ const CartItem = ({ item, quantity, subTotal }) => {
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
   const [qty, setQty] = useState(0);
+
   const increaseItemQuantity = (payload) => {
     dispatch(increaseQuantity(payload));
   };
   const decreaseItemQuantity = (payload) => {
-    console.log(payload);
     dispatch(decreaseQuantity(payload));
   };
 
   useEffect(() => {
-    setQty(item.quantity);
-    setTotal(item.productPrice * item.quantity);
-  }, []);
-
-  useEffect;
+    setQty(quantity);
+    setTotal(subTotal);
+  });
 
   return (
     <>
@@ -47,14 +47,13 @@ const CartItem = ({ item, quantity, subTotal }) => {
           onClick={() =>
             decreaseItemQuantity({
               id: item.id,
-              productName: item.productPrice,
-              productImage: item.productImage,
-              productBrand: item.productBrand,
-              productPrice: item.productPrice,
+              productName: item.name,
+              productImage: item.thumbnailImage,
+              productBrand: item.brand,
+              productPrice: item.basePrice,
               productCategory: item.productCategory,
               productColor: item.productColor,
               stock: item.stock,
-              total: qty * item.productPrice,
               quantity: qty,
             })
           }
@@ -62,7 +61,7 @@ const CartItem = ({ item, quantity, subTotal }) => {
         >
           -
         </button>
-        <span className="text-black font-bold text-lg">x {quantity}</span>
+        <span className="text-black font-bold text-lg">x {item.quantity}</span>
         <button
           onClick={() =>
             increaseItemQuantity({
@@ -74,7 +73,6 @@ const CartItem = ({ item, quantity, subTotal }) => {
               productCategory: item.productCategory,
               productColor: item.productColor,
               stock: item.stock,
-              total: qty * item.basePrice,
               quantity: qty,
             })
           }
@@ -83,7 +81,7 @@ const CartItem = ({ item, quantity, subTotal }) => {
           +
         </button>
       </div>
-      <div className="text-black font-bold text-lg w-40 pt-3">{subTotal} €</div>
+      <div className="text-black font-bold text-lg w-40 pt-3">{total} €</div>
       <div className="flex justify-end px-6 py-3 gap-4 w-40">
         <MdEdit className="text-blue-800 text-3xl font-bold hover:cursor-pointer" />
         <FaRegTrashCan

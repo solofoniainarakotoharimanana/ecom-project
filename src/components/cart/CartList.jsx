@@ -24,6 +24,7 @@ const CartList = () => {
       }, 0)
     );
   }, []);
+
   useEffect(() => {
     setCarts(cartList);
     setItemNumber(
@@ -37,8 +38,6 @@ const CartList = () => {
       }, 0)
     );
   }, [cartList]);
-
-  console.log(carts);
   return (
     <div className="container mx-auto">
       {carts.length > 0 ? (
@@ -48,8 +47,8 @@ const CartList = () => {
           </h1>
           {carts.map((item) => {
             return (
-              <>
-                <div key={item.id} className="flex gap-1 p-1 text-center">
+              <div key={item.id}>
+                <div className="flex gap-1 p-1 text-center">
                   <CartItem
                     item={item}
                     quantity={item.quantity}
@@ -57,7 +56,7 @@ const CartList = () => {
                   />
                 </div>
                 <hr className="bg-gray-500 my-4" />
-              </>
+              </div>
             );
           })}
           <div className="flex justify-between mt-16">
@@ -72,23 +71,23 @@ const CartList = () => {
                 <span className="text-slate-950 text-lg font-semibold">
                   Number of item:{" "}
                 </span>
-                <san className="text-slate-950 text-lg font-bold">
+                <span className="text-slate-950 text-lg font-bold">
                   {itemNumber}
-                </san>
+                </span>
               </div>
               <div className="flex gap-3">
                 <span className="text-slate-950 text-lg font-semibold">
                   Subtotal:{" "}
                 </span>
-                <san className="text-slate-950 text-lg font-bold">
+                <span className="text-slate-950 text-lg font-bold">
                   {subTotal} €
-                </san>
+                </span>
               </div>
               <div className="flex gap-3">
                 <span className="text-slate-950 text-lg font-semibold">
                   Taxe:{" "}
                 </span>
-                <san className="text-slate-950 text-lg font-bold">{taxe}</san>
+                <span className="text-slate-950 text-lg font-bold">{taxe}</span>
               </div>
               <div className="flex gap-3">
                 <span className="text-slate-950 text-lg font-semibold">

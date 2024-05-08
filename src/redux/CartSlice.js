@@ -11,8 +11,7 @@ const cartSlice = createSlice({
       const itemExist = state.cartList.find((c) => c.id === action.payload.id);
 
       if (itemExist) {
-        let tempQty = itemExist.quantity + 1;
-        /*itemExist.total = itemExist.quantity * itemExist.productPrice;*/
+        let tempQty = itemExist.quantity + action.payload.quantity;
         state.cartList = state.cartList.map((item) =>
           item.id === action.payload.id
             ? {
@@ -43,17 +42,18 @@ const cartSlice = createSlice({
           : item
       );
     },
-    decreaseQuantity: (state, action) => {
+    decreaseQuantity: (state, { payload }) => {
       state.cartList = state.cartList.map((item) =>
-        item.id === action.payload.id
-          ? item.quantity > 1
-            ? {
-                ...item,
-                quantity: item.quantity - 1,
-                total: item.productPrice * (item.quantity - 1),
-              }
-            : { ...item, quantity: 1, total: item.productPrice }
-          : { ...item, quantity: 1, total: item.productPrice }
+        item.id === payload.id
+          ? {
+              ...item,
+              quantity: item.quantity > 1 ? item.quantity - 1 : 1,
+              total:
+                item.quantity > 1
+                  ? item.productPrice * (item.quantity - 1)
+                  : item.productPrice,
+            }
+          : item
       );
     },
   },

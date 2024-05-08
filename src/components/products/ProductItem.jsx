@@ -104,7 +104,7 @@ const ProductItem = ({ product }) => {
               productCategory: product.productCategory,
               productColor: product.colorOptions[0],
               stock: product.stock,
-              total: 1 * product.basePrice,
+              total: product.basePrice * 1,
               quantity: 1,
             })
           }
