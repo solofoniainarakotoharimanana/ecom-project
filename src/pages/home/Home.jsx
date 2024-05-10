@@ -67,23 +67,6 @@ const Home = () => {
     return containsProducts;
   });
 
-  /*const containsProductsByName = p.name
-      .toLowerCase()
-      .includes(searchText.toLowerCase());
-
-    return containsProducts;
-  });
-
-  const filteredProductsByCategory = products.filter((p) => {
-    const containsProducts = p.productCategory
-      .toLowerCase()
-      .includes(searchCategory.toLowerCase());
-
-    return containsProducts.name
-      .toLocaleLowerCase()
-      .includes(searchText.toLocaleLowerCase());
-  });*/
-
   return (
     <div className="bg-slate-300 h-full">
       <Search products={products} setSearchText={setSearchText} />

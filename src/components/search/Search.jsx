@@ -7,7 +7,7 @@ const Search = ({ setSearchText }) => {
   return (
     <div
       className="bg-indigo-800 relative
-        p-6 flex 
+        p-6 flex
         justify-end"
     >
       <input

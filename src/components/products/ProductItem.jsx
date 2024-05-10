@@ -32,7 +32,7 @@ const ProductItem = ({ product }) => {
         src={product.thumbnailImage}
         alt={product.name}
       />
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-around">
         <div>
           <span className="text-sm text-zinc-400">Category: </span>
           <span className="text-indigo-700 text-sm font-bold">
@@ -47,10 +47,10 @@ const ProductItem = ({ product }) => {
         </div>
       </div>
 
-      <div className="text-sm text-gray-500 text-start first-letter:text-2xl first-letter:font-bol">
+      <div className="text-sm pl-5 pr-2 text-gray-500 text-start first-letter:text-2xl first-letter:font-bol">
         {product.description}
       </div>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-around">
         <div>
           <span className="text-sm text-zinc-400">Stock: </span>
           <span className="text-indigo-700 text-sm font-bold">
@@ -64,7 +64,7 @@ const ProductItem = ({ product }) => {
           </span>
         </div>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-around">
         <div className="flex flex-row">
           <p className="text-sm text-zinc-400">Colors: </p>
           <div className="flex flex-row justify-between mt-1">

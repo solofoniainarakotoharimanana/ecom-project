@@ -19,6 +19,10 @@ const ModalProductDetail = ({ product, showOrCloseModal, toggleModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleToastify = (productName) => {
+    toast.success(`${productName} added successfully in the cart .`);
+  };
+
   const increaseQuantity = () => {
     if (qty < product.stock) {
       setQty(qty + 1);
@@ -34,7 +38,9 @@ const ModalProductDetail = ({ product, showOrCloseModal, toggleModal }) => {
 
   const addToCartList = (payload) => {
     dispatch(addToCart(payload));
+    handleToastify(payload.productName);
     showOrCloseModal();
+
     navigate("/cart");
   };
 
@@ -232,6 +238,7 @@ const ModalProductDetail = ({ product, showOrCloseModal, toggleModal }) => {
             <FaShoppingCart className="mr-1" />
             Add to cart
           </button>
+          <ToastContainer />
         </div>
       </div>
     </div>
