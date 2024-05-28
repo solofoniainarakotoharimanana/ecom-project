@@ -8,6 +8,8 @@ import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/home/Home";
 import CartList from "./components/cart/CartList";
+import SignIn from "./components/signin/SignIn";
+import SignUp from "./components/signup/SignUp";
 
 function App() {
   const Layouts = () => {
@@ -32,6 +34,14 @@ function App() {
         {
           path: "/cart",
           element: <CartList />,
+        },
+        {
+          path: "/signin",
+          element: <SignIn />,
+        },
+        {
+          path: "/signup",
+          element: <SignUp />,
         },
       ],
     },

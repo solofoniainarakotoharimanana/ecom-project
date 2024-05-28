@@ -2,9 +2,10 @@ import { IoMenu } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const cartList = useSelector((state) => state.CARTS.cartList);
   const [cartDatas, setCartDatas] = useState([]);
   useEffect(() => {
@@ -20,6 +21,11 @@ const Navbar = () => {
       mobileMenu.classList.toggle("hidden");
     });
   };
+
+  const navigateToSignIn = () => {
+    navigate("/signIn");
+  };
+
   return (
     <nav className="bg-gray-800 text-white sticky top-0">
       <div className="container mx-auto px-4 md:flex items-center justify-between gap-6">
@@ -64,6 +70,7 @@ const Navbar = () => {
           </Link>
           <div>
             <button
+              onClick={navigateToSignIn}
               className="bg-transparent hover:bg-green-900
               text-slate-300 font-semibold
               hover:text-white py-2
